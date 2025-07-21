@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Scanner;
 
@@ -54,11 +55,17 @@ public class ContactBook {
         System.out.println("Contact added successfully!");
     }
 
+    private static void sortContactsByName() {
+        contacts.sort(Comparator.comparing(Contact::getName, String.CASE_INSENSITIVE_ORDER));
+    }
+
     private static void viewContacts() {
         if(contacts.isEmpty()) {
             System.out.println("No contacts to display");
             return;
         }
+        sortContactsByName();
+
         for(Contact  contact: contacts) {
             contact.displayContact();
             System.out.println("-------------------------------");
