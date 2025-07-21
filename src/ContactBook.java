@@ -13,17 +13,20 @@ public class ContactBook {
 
         while (running) {
             showMenu();
-            int choice = scanner.nextInt();
-            scanner.nextLine();
+            try {
+                int choice = Integer.parseInt((scanner.nextLine()));
 
-            switch (choice) {
-                case 1: addContact(); break;
-                case 2: viewContacts(); break;
-                case 3: searchContact(); break;
-                case 4: deleteContact(); break;
-                case 5: running = false; break;
-                default:
-                    System.out.println("Invalid Choice. Try again.");
+                switch (choice) {
+                    case 1: addContact(); break;
+                    case 2: viewContacts(); break;
+                    case 3: searchContact(); break;
+                    case 4: deleteContact(); break;
+                    case 5: running = false; break;
+                    default:
+                        System.out.println("Invalid Choice. Try again.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter a valid number.");
             }
         }
     }
