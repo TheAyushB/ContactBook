@@ -1,3 +1,5 @@
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -22,7 +24,8 @@ public class ContactBook {
                     case 2: viewContacts(); break;
                     case 3: searchContact(); break;
                     case 4: deleteContact(); break;
-                    case 5: running = false; break;
+                    case 5: exportContacts(); break;
+                    case 6: running = false; break;
                     default:
                         System.out.println("Invalid Choice. Try again.");
                 }
@@ -38,7 +41,8 @@ public class ContactBook {
         System.out.println("2. View All Contacts");
         System.out.println("3. Search Contact by Name");
         System.out.println("4. Delete Contact by Name");
-        System.out.println("5. Exit");
+        System.out.println("5. Export Contacts to File");
+        System.out.println("6. Exit");
         System.out.println("Choose an option: ");
     }
 
@@ -102,6 +106,22 @@ public class ContactBook {
             }
         }
         if (!deleted) System.out.println("Contact not found.");
+    }
+
+    private static void exportContacts() {
+        try {
+            FileWriter writer = new FileWriter("contacts.txt");
+            for(Contact contact : contacts) {
+                writer.write("Name: " + contact.getName() + "\n");
+                writer.write("Phone: " + contact.getPhoneNumber() + "\n");
+                writer.write(("Email: " + contact.getEmail()) + "\n");
+                writer.write("----------------------------------");
+            }
+            writer.close();
+            System.out.println("Contacts exported to contacts.txt successfully.");
+        } catch (IOException e) {
+            System.out.println("An error occurred while writing to file.");
+        }
     }
 
 }
