@@ -1,5 +1,3 @@
-import java.sql.SQLOutput;
-
 public class Contact {
 
     // privatefields for encapsulation
@@ -29,5 +27,18 @@ public class Contact {
         System.out.println("Phone: " + phoneNumber);
         System.out.println("Emial: " + email);
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
 
 }

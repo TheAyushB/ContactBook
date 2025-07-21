@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Scanner;
+import java.util.stream.*;
 
 public class ContactBook {
 
@@ -24,8 +25,9 @@ public class ContactBook {
                     case 2: viewContacts(); break;
                     case 3: searchContact(); break;
                     case 4: deleteContact(); break;
-                    case 5: exportContacts(); break;
-                    case 6: running = false; break;
+                    case 5: updateContact(); break;
+                    case 6: exportContacts(); break;
+                    case 7: running = false; break;
                     default:
                         System.out.println("Invalid Choice. Try again.");
                 }
@@ -41,8 +43,9 @@ public class ContactBook {
         System.out.println("2. View All Contacts");
         System.out.println("3. Search Contact by Name");
         System.out.println("4. Delete Contact by Name");
-        System.out.println("5. Export Contacts to File");
-        System.out.println("6. Exit");
+        System.out.println("5. Update Contact");
+        System.out.println("6: Export Contacts to File");
+        System.out.println("7. Exit");
         System.out.println("Choose an option: ");
     }
 
@@ -121,6 +124,44 @@ public class ContactBook {
             System.out.println("Contacts exported to contacts.txt successfully.");
         } catch (IOException e) {
             System.out.println("An error occurred while writing to file.");
+        }
+    }
+
+    private static void updateContact() {
+        System.out.println("Enter name of the contact to update: ");
+        String nameToUpdate = scanner.nextLine();
+        boolean found = false;
+        for(Contact contact : contacts) {
+            if(contact.getName().equalsIgnoreCase(nameToUpdate)) {
+                found = true;
+                System.out.println("Enter new name (leave blank to keep unchanged)");
+                String newName = scanner.nextLine();
+                if(!newName.isBlank()) {
+                    boolean nameExists = contacts.stream().anyMatch(c -> !c.equals(contact) && c.getName().equalsIgnoreCase(newName));
+                    if(nameExists) {
+                        System.out.println("A contact with this name already exists. Name not updated.");
+                    } else {
+                        contact.setName(newName);
+                        System.out.println("Name updated");
+                    }
+                }
+                System.out.println("Enter new phone number (press Enter to skip): ");
+                String newPhone = scanner.nextLine();
+                if(!newPhone.isBlank()) {
+                    contact.setPhoneNumber(newPhone);
+                    System.out.println("Phone number updated.");
+                }
+                System.out.println("Enter new email (press Enter to skip): ");
+                String newEmail = scanner.nextLine();
+                if(!newEmail.isBlank()) {
+                    contact.setEmail(newEmail);
+                    System.out.println("Email updated");
+                }
+                break;
+            }
+        }
+        if(!found) {
+            System.out.println("Contact not found.");
         }
     }
 
